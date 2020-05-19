@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    checkout,
+    CheckoutView,
     ItemDetailView,
     HomeView,
     add_to_cart,
@@ -16,7 +16,7 @@ urlpatterns = [
     # path('', HomeView.as_view(), name='home'),
     # have to call as_view() function so as to return a callable view that takes a request and returns a response.
     # as_view() - Its the main entry-point in request-response cycle in case of generic views
-    path('checkout/', checkout, name="checkout"),
+    path('checkout/', CheckoutView.as_view(), name="checkout"),
     path('product/<slug>/', ItemDetailView.as_view(), name="product"),
     # the reason it is taken <slug> because it is DetailView so either we pass primary key or slug for class based view to handel which object it is getting
 
