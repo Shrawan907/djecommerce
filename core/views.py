@@ -28,7 +28,8 @@ class CheckoutView(View):
             context = {
                 'form': form,
                 'couponform': CouponForm(),
-                'order': order
+                'order': order,
+                'DISPLAY_COUPON_FORM': True
             }
             return render(self.request, "checkout.html", context)
         except ObjectDoesNotExist:
@@ -81,10 +82,16 @@ class PaymentView(View):
     def get(self, *args, **kwargs):
         # order
         order = Order.objects.get(user=self.request.user, ordered=False)
-        context = {
-            'order': order
-        }
-        return render(self.request, 'payment.html', context)
+        if order.billing_address:
+            context = {
+                'order': order,
+                'DISPLAY_COUPON_FORM': False
+            }
+            return render(self.request, 'payment.html', context)
+        else:
+            messages.warning(
+                self.request, "You have not added billing address")
+            return redirect("core:checkout")
 
     def post(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, ordered=False)
@@ -124,28 +131,28 @@ class PaymentView(View):
             # Since it's a decline, stripe.error.CardError will be caught
             body = e.json_body
             err = body.get('error', {})
-            messages.error(self.request, f"{err.get('message')}")
+            messages.warning(self.request, f"{err.get('message')}")
         except stripe.error.RateLimitError as e:
             # Too many requests made to the API too quickly
-            messages.error(self.request, "RateLimitError")
+            messages.warning(self.request, "RateLimitError")
         except stripe.error.InvalidRequestError as e:
             # Invalid parameters were supplied to Stripe's API
-            messages.error(self.request, "InvalidRequestError")
+            messages.warning(self.request, "InvalidRequestError")
         except stripe.error.AuthenticationError as e:
             # Authentication with Stripe's API failed
             # (maybe you changed API keys recently)
-            messages.error(self.request, "AuthenticationError")
+            messages.warning(self.request, "AuthenticationError")
         except stripe.error.APIConnectionError as e:
             # Network communication with Stripe failed
-            messages.error(self.request, "APIConnectionError")
+            messages.warning(self.request, "APIConnectionError")
         except stripe.error.StripeError as e:
             # Display a very generic error to the user, and maybe send
             # yourself an email
-            messages.error(
+            messages.warning(
                 self.request, "Something went wrong. You were not charged. Try againg!")
         except Exception as e:
             # Send an email to ourlselves
-            messages.error(
+            messages.warning(
                 self.request, "A serious error has occured. We have been notified")
 
         return redirect("/")
@@ -171,7 +178,7 @@ class OrderSummary(LoginRequiredMixin, View):
             }
             return render(self.request, 'order_summary.html', context)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an active order")
+            messages.warning(self.request, "You do not have an active order")
             return redirect("/")
 
 
@@ -270,19 +277,18 @@ def get_coupon(request, code):
         return redirect("core:checkout")
 
 
-def add_coupon(request):
-    if request.method == "POST":
-        form = CouponForm(request.POST or None)
+class AddCouponView(View):
+    def post(self, *args, **kwargs):
+        form = CouponForm(self.request.POST or None)
         if form.is_valid():
             try:
                 code = form.cleaned_data.get('code')
-                order = Order.objects.get(user=request.user, ordered=False)
-                order.coupon = get_coupon(request, code)
+                order = Order.objects.get(
+                    user=self.request.user, ordered=False)
+                order.coupon = get_coupon(self.request, code)
                 order.save()
-                messages.success(request, "Successfully added coupon :)")
+                messages.success(self.request, "Successfully added coupon :)")
                 return redirect("core:checkout")
             except ObjectDoesNotExist:
-                messages.info(request, "You do not have active order")
+                messages.info(self.request, "You do not have active order")
                 return redirect("core:checkout")
-    # TODO raise error
-    return None
