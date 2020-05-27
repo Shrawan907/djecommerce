@@ -68,20 +68,13 @@
                 </div>
                 <!--Grid row-->
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" name="same_billing_address"
-                    id="same_billing_address">
-
-                  <label class="custom-control-label" for="same_billing_address">Billing address is the same as my
-                    shipping
-                    address</label>
-                </div>
-                <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" name="set_default_shipping"
                     id="set_default_shipping">
                   <label class="custom-control-label" for="set_default_shipping">Save as default shipping
                     address</label>
                 </div>
               </div>
+
               {% if default_shipping_address %}
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" name="use_default_shipping"
@@ -90,68 +83,79 @@
                   address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
               </div>
               {% endif %}
-              <hr>
-
-              <h3>Billing Address</h3>
-              <div class='hideable_shipping_form'>
-
-                <!--address-->
-                <div class="md-form mb-5">
-                  <input type='text' placeholder='1234 Main St' id='billing_address' name='billing_address'
-                    class='form-control'>
-                  <label for="billing_address" class="">Address</label>
-                </div>
-                <!--address-2-->
-                <div class="md-form mb-5">
-                  <input type='text' placeholder='Apartment or suite' id='billing_address2' name='billing_address2'
-                    class='form-control'>
-                  <label for="billing_address2" class="">Address 2 (optional)</label>
-                </div>
-
-                <!--Grid row-->
-                <div class="row">
-
-                  <!--Grid column-->
-                  <div class="col-lg-4 col-md-12 mb-4">
-
-                    <label for="billing_country">Country</label>
-                    {{ form.billing_country }}
-                    <div class="invalid-feedback">
-                      Please select a valid country.
-                    </div>
-
-                  </div>
-                  <!--Grid column-->
-
-                  <!--Grid column-->
-                  <div class="col-lg-4 col-md-6 mb-4">
-                    <label for="billing_zip">Zip</label>
-                    <input type='text' placeholder='Zip code' id='billing_zip' name='billing_zip' class='form-control'>
-                    <div class="invalid-feedback">
-                      Zip code required.
-                    </div>
-                  </div>
-                  <!--Grid column-->
-                </div>
-                <!--Grid row-->
-
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" name="set_default_billing"
-                    id="set_default_billing">
-                  <label class="custom-control-label" for="set_default_billing">Save as default billing
-                    address</label>
-                </div>
-
-              </div>
-              {% if default_billing_address %}
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="use_default_billing" id="use_default_billing">
-                <label class="custom-control-label" for="use_default_billing">Use default billing
-                  address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+                <input type="checkbox" class="custom-control-input" name="same_billing_address"
+                  id="same_billing_address">
+                <label class="custom-control-label" for="same_billing_address">Billing address is the same as my
+                  shipping address</label>
               </div>
-              {% endif %}
               <hr>
 
+              <div class="billing">
+
+                <h3>Billing Address</h3>
+                <div class='hideable_billing_form'>
+
+                  <!--address-->
+                  <div class="md-form mb-5">
+                    <input type='text' placeholder='1234 Main St' id='billing_address' name='billing_address'
+                      class='form-control'>
+                    <label for="billing_address" class="">Address</label>
+                  </div>
+                  <!--address-2-->
+                  <div class="md-form mb-5">
+                    <input type='text' placeholder='Apartment or suite' id='billing_address2' name='billing_address2'
+                      class='form-control'>
+                    <label for="billing_address2" class="">Address 2 (optional)</label>
+                  </div>
+
+                  <!--Grid row-->
+                  <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-12 mb-4">
+
+                      <label for="billing_country">Country</label>
+                      {{ form.billing_country }}
+                      <div class="invalid-feedback">
+                        Please select a valid country.
+                      </div>
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                      <label for="billing_zip">Zip</label>
+                      <input type='text' placeholder='Zip code' id='billing_zip' name='billing_zip'
+                        class='form-control'>
+                      <div class="invalid-feedback">
+                        Zip code required.
+                      </div>
+                    </div>
+                    <!--Grid column-->
+                  </div>
+                  <!--Grid row-->
+
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="set_default_billing"
+                      id="set_default_billing">
+                    <label class="custom-control-label" for="set_default_billing">Save as default billing
+                      address</label>
+                  </div>
+
+                </div>
+
+                {% if default_billing_address %}
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="use_default_billing"
+                    id="use_default_billing">
+                  <label class="custom-control-label" for="use_default_billing">Use default billing
+                    address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+                </div>
+                {% endif %}
+
+              </div>
 
               <hr>
 
@@ -194,3 +198,43 @@
 </html>
 
 {% endblock content %}
+
+{% block extra_scripts %}
+
+<script>
+  $(document).ready(function () {
+    //  default shipping addr
+    $('input[id="use_default_shipping"]').click(function () {
+      if ($(this).prop("checked") == true) {
+        $(".hideable_shipping_form").hide();
+
+      }
+      else if ($(this).prop("checked") == false) {
+        $(".hideable_shipping_form").show();
+      }
+    });
+    //  default billing addr
+    $('input[id="use_default_billing"]').click(function () {
+      if ($(this).prop("checked") == true) {
+        $(".hideable_billing_form").hide();
+
+      }
+      else if ($(this).prop("checked") == false) {
+        $(".hideable_billing_form").show();
+      }
+    });
+    //  use billing addr same as shipping addr
+    $('input[id="same_billing_address"]').click(function () {
+      if ($(this).prop("checked") == true) {
+        $(".billing").hide();
+
+      }
+      else if ($(this).prop("checked") == false) {
+        $(".billing").show();
+      }
+    });
+  });
+
+</script>
+
+{% endblock extra_scripts %}

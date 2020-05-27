@@ -67,11 +67,14 @@
     {% endblock content %}
 
     {% block extra_body %}
-    {% endblock %}
+    {% endblock extra_body %}
+
+    {% include 'footer.html' %}
+    {% include 'scripts.html' %}
+
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
 
 </body>
-
-{% include 'footer.html' %}
-{% include 'scripts.html' %}
 
 </html>
