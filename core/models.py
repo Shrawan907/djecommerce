@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
+from django.db.models.signals import post_save
 
 CATEGORY_CHOICES = (
     ('S', 'Shirt'),
@@ -19,6 +20,16 @@ ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S', 'Shipping'),
 )
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    stripe_customer_id = models.CharField(max_length=50, blank=True, null=True)
+    one_click_purchasing = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Item(models.Model):
@@ -95,16 +106,6 @@ class Order(models.Model):
     received = models.BooleanField(default=False)
     refund_requested = models.BooleanField(default=False)
     refund_granted = models.BooleanField(default=False)
-    '''
-    1. Item added to cart
-    2. Adding Billing address
-    (Failed Checkout)
-    3. Payment
-    (Preprcessing, processing, packaging, etc.)
-    4. Being Delivered
-    5. Recieved
-    6. Refunds
-    '''
 
     def _str_(self):
         return self.user.username
@@ -147,8 +148,8 @@ class Payment(models.Model):
 
 
 class Coupon(models.Model):
-    code = models.CharField(max_length=15)
-    amount = models.FloatField()
+    code = models.CharField(max_length=15, blank=True, null=True)
+    amount = models.FloatField(default=0)
 
     def __str__(self):
         return self.code
@@ -162,3 +163,11 @@ class Refund(models.Model):
 
     def __str__(self):
         return f"{self.pk}"
+
+
+def userprofile_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        userprofile = UserProfile.objects.create(user=instance)
+
+
+post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)

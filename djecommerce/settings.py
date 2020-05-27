@@ -101,3 +101,5 @@ LOGIN_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STRIPE_SECRET_KEY = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
