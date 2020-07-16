@@ -72,12 +72,10 @@
           <div class="col-lg-3 col-md-6 mb-4">
 
             <!--Card-->
-            <div class="card">
+            <div class="card" style="height: 450px;">
 
               <!--Card image-->
               <div class="view overlay">
-                <!-- <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                  alt=""> -->
                 <img src="{{ item.image.url }}" class="card-img-top" alt="">
                 <a href="{{ item.get_absolute_url }}">
                   <div class="mask rgba-white-slight"></div>
@@ -91,6 +89,7 @@
                 <a href="" class="grey-text">
                   <h5>{{ item.get_category_display }}</h5>
                 </a>
+                {% if item.get_label_display != '#' %}
                 <h5>
                   <strong>
                     <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
@@ -98,6 +97,7 @@
                     </a>
                   </strong>
                 </h5>
+                {% endif %}
 
                 <h4 class="font-weight-bold blue-text">
                   <strong>

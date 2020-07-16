@@ -7,10 +7,18 @@ from django.db.models.signals import post_save
 CATEGORY_CHOICES = (
     ('S', 'Shirt'),
     ('SW', 'Sport Wear'),
-    ('OW', 'Outwear')
+    ('OW', 'Outwear'),
+    ('GP', 'Gents Pants'),
+    ('LP', 'Ladies Pants'),
+    ('T', 'Tshirts'),
+    ('C', 'Coat'),
+    ('LT', 'Ladies Tops'),
+    ('LS', 'Ladies Shirt'),
+    ('LC', 'Ladies Coat')
 )
 
 LABEL_CHOICES = (
+    ('N', '#'),
     ('P', 'primary'),
     ('S', 'secondary'),
     ('D', 'danger')
@@ -37,7 +45,7 @@ class Item(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=1)
+    label = models.CharField(choices=LABEL_CHOICES, max_length=1,)
     description = models.TextField()
     slug = models.SlugField()
     image = models.ImageField()
