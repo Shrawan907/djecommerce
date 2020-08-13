@@ -28,11 +28,11 @@
 
 ## Images ##
 **User side**
-![home](/readme_images/dje_1.png/200x150 "home page")   |   ![Item](/readme_images/dje_2.png/200x150 "product")    |    ![order summary](/readme_images/dje_3.png/200x150 "order_summary")
-![checkout](/readme_images/dje_4.png/200x150 "checkout")    |   ![payment](/readme_images/dje_5.png/200x150 "payment")
+![home](/readme_images/dje_1.png)   |   ![Item](/readme_images/dje_2.png)    |    ![order summary](/readme_images/dje_3.png)
+![checkout](/readme_images/dje_4.png)    |   ![payment](/readme_images/dje_5.png)
 
 **Admin side**
-![Admin](/readme_images/dje_6.png/200x150 "admin page")
+![Admin](/readme_images/dje_6.png)
 
 
 - - - -
