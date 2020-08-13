@@ -1,14 +1,58 @@
-DJECOMMERCE
+## DJECOMMERCE ##
+- - - -
 
-commit 14-15:
-    some fields like quantity, user, ordered etc. and some methods are added in models.py
-    navbar, footer, scripts made common for all pages
-    alert messages are added where required
-    function based view in views.py is now class based view, etc.
 
-commit 13:
-    most of the work needid in this project is backend side, we are using python and django
+### About ###
+* This is a e-commorce website.
+* This website is designed to see the work flow of general ecommorce website.
+* Website is developed using [Django](https://www.djangoproject.com/) web framework.
 
-    uptil now we work with setting up static files for this project and loading them in html home.page
 
-    I made changes for only home.html so it might be possible, other pages not work in the way we want, I just started work on this project, so in comming commits I keep on developing this project...
+### Features ###
+
+**Front-End**
+* Sign-in/Sign-up
+* Add Items to Cart
+* Update Items in Cart
+* Checkout page
+    * Save Address for future
+    * Add Promo Code
+* Card Payment (Stripe) *test using 4242 4242 4242 4242*
+
+**Back-End**
+* Manage users
+* Add or remove Items
+* Manage Coupons
+* Order Items Data
+* Payment Data
+
+## Images ##
+**User side**
+![home](/readme_images/dje_1.png/200x150 "home page")   |   ![Item](/readme_images/dje_2.png/200x150 "product")    |    ![order summary](/readme_images/dje_3.png/200x150 "order_summary")
+![checkout](/readme_images/dje_4.png/200x150 "checkout")    |   ![payment](/readme_images/dje_5.png/200x150 "payment")
+
+**Admin side**
+![Admin](/readme_images/dje_6.png/200x150 "admin page")
+
+
+- - - -
+
+### Run this on your system ###
+**Steps for windows**
+- Fork this repository
+- write below commands in command prompt inside your project folder path
+- Install requirements
+    - *pip install -r requirements.txt*
+- Create virtual environments for this project
+    - *virtualenv env*
+    - (activate it) *env\Scripts\activate*
+- Run the server
+    - *python manage.py runserver*
+- Ready to go😉
+
+
+
+
+
+
+
