@@ -17,7 +17,7 @@
 * Checkout page
     * Save Address for future
     * Add Promo Code
-* Card Payment (Stripe) *test using 4242 4242 4242 4242*
+
 
 **Back-End**
 * Manage users
@@ -28,10 +28,17 @@
 
 ## Images ##
 **User side**
-![home](/readme_images/dje_1.png)   |   ![Item](/readme_images/dje_2.png)    |    ![order summary](/readme_images/dje_3.png)
-![checkout](/readme_images/dje_4.png)    |   ![payment](/readme_images/dje_5.png)
+
+![home](/readme_images/dje_1.png)      
+
+![Item](/readme_images/dje_2.png)        
+
+![order summary](/readme_images/dje_3.png)
+
+![checkout](/readme_images/dje_4.png)       
 
 **Admin side**
+
 ![Admin](/readme_images/dje_6.png)
 
 
