@@ -24,7 +24,6 @@
 * Add or remove Items
 * Manage Coupons
 * Order Items Data
-* Payment Data
 
 ## Images ##
 **User side**
